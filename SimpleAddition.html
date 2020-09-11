@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Counter</title>
+    <style>
+        @keyframes grow {
+            from {
+                font-size: 20px;
+                color: white;
+            }
+            to {
+                font-size: 100px;
+                color: green;
+            }
+        }
+        #app{
+            text-align:center;
+            font-family: sans-serif;
+            padding: 10px;
+        }
+        
+        #problem{
+            font-size : 72px;
+
+        }
+        #win{
+            padding: 10%;
+            color: green;
+            animation-name: grow;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+        }
+        #score{
+            padding:20px;
+        }
+        #start{
+            padding-top:10%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" />
+    <script type="text/babel">
+
+        class App extends React.Component { 
+            constructor(props) { 
+                super(props); 
+                this.state = { 
+                    score: 0, 
+                    num1:1, 
+                    num2:2, 
+                    response:"" 
+                    }; 
+                    } 
+            render() { 
+                if(this.state.score===10){
+                    return(
+                        <div id="win">Congrats! You Won!</div>
+                    );
+                }
+                else{
+                return (
+                    <div>
+                        <div id="start">Welcome User! Solve this question!</div>
+                        <div id="problem">{this.state.num1}+{this.state.num2}</div>
+                        <input onKeyPress={this.inputKeyPress} onChange={this.updateResponse} autoFocus={true} value={this.state.response} />
+                        <div id="score">Score : {this.state.score}</div>
+                    </div>
+            );} } 
+        inputKeyPress = (event) => { 
+            if(event.key==='Enter'){ 
+                const answer = parseInt(this.state.response); 
+                if(answer===this.state.num1+this.state.num2){ 
+                    //User got question right 
+                    this.setState(state => ({ 
+                        score : state.score + 1,
+                        num1 : Math.ceil(Math.random() * 10),
+                        num2 : Math.ceil(Math.random() * 10),
+                        response : ""
+                        })); 
+                        }
+                else{ 
+                    //User was wrong
+                    this.setState(state => ({
+                        score : state.score - 1,
+                        response: ""
+                    }));
+        } } }; 
+        updateResponse = (event) => { 
+            this.setState({ 
+                response : event.target.value 
+                }); } 
+        } 
+        ReactDOM.render(
+
+        <App />, document.querySelector("#app"));
+
+    </script>
+</body>
+
+</html>
