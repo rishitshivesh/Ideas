@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Currency Exchange</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Rishit Shivesh">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('https://api.exchangeratesapi.io/latest?base=INR')
+                .then((response) => response.json())
+                .then((rates) => {
+                    var text = JSON.stringify(rates.rates);
+                    document.querySelector('marquee').innerHTML = `Current Rates for Base INR : ${text}`;
+                    Object.keys(rates.rates).forEach((rate) => {
+                        //console.log(rate);
+                        var item1 = document.createElement('option');
+                        var item2 = document.createElement('option');
+                        item1.innerHTML = rate;
+                        item2.innerHTML = rate;
+                        document.querySelector('#option1').appendChild(item1);
+                        document.querySelector('#option2').appendChild(item2);
+                    });
+                    document.querySelector('#submit').onclick = () => {
+                        const from = document.querySelector('#option1').value.toUpperCase();
+                        const to = document.querySelector('#option2').value.toUpperCase();
+                        const value = document.querySelector('#input1').value;
+                        fetch(`https://api.exchangeratesapi.io/latest?base=${from}`)
+                            .then((response) => response.json())
+                            .then((rates) => {
+                                //console.log(from);
+                                //console.log(to);
+                                //console.log(rates.rates);
+                                const rate = rates.rates[to];
+                                const conv = (rate * value).toFixed(4);
+                                document.querySelector('#answer').innerHTML = `${value} ${from} is <strong>${conv} ${to}</strong>`;
+                                console.log('Fun! Right?');
+                                //console.log(rate * value);
+                            });
+                    };
+                });
+            return false;
+
+
+        });
+    </script>
+</head>
+
+<body style="background-image:url(https://wallpapercave.com/wp/wp2300367.jpg) ;">
+
+    <center>
+        <div class="mx-auto" style="border:2px solid black;width:70%;border-radius: 20px;margin-top: 10%; padding:3%; background: rgb(255,255,255,0.6);">
+            <h3>Welcome to Currency Exchange</h3>
+            <hr>
+            <input type="text" id="input1" class="form-control w-50 mx-auto" required><br> From : <select id="option1" class="mx-auto m-2"></select>
+            <!-- <input type="text" id="input2"> -->
+            To: <select id='option2' class="mx-auto m-2"></select><br>
+            <input type="submit" id="submit" class="mx-auto btn btn-primary" style="margin-top:10px ;">
+            <hr>
+            <div id="answer" class="mx-auto" style="font-size: 18px;"></div>
+            <marquee class="fixed-bottom" style="background: rgb(090,100,200,0.5);color:white;margin-bottom:20px;"></marquee>
+        </div>
+    </center>
+</body>
+
+
+</html>
