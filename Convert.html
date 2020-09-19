@@ -16,7 +16,7 @@
                 .then((rates) => {
                     var text = JSON.stringify(rates.rates);
                     document.querySelector('marquee').innerHTML = `Current Rates for Base INR : ${text}`;
-                    Object.keys(rates.rates).forEach((rate) => {
+                    Object.keys(rates.rates).sort().forEach((rate) => {
                         //console.log(rate);
                         var item1 = document.createElement('option');
                         var item2 = document.createElement('option');
