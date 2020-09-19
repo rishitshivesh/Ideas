@@ -28,7 +28,8 @@
                     document.querySelector('#submit').onclick = () => {
                         const from = document.querySelector('#option1').value.toUpperCase();
                         const to = document.querySelector('#option2').value.toUpperCase();
-                        const value = document.querySelector('#input1').value;
+                        var value = document.querySelector('#input1').value;
+                        value = value.replace(',','');
                         fetch(`https://api.exchangeratesapi.io/latest?base=${from}`)
                             .then((response) => response.json())
                             .then((rates) => {
