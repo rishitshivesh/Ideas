@@ -14,6 +14,9 @@
             fetch('https://api.exchangeratesapi.io/latest?base=INR')
                 .then((response) => response.json())
                 .then((rates) => {
+                    var date = JSON.stringify(rates.date);
+                    console.log(date);
+                    document.querySelector('#date').innerHTML = `Updated : ${date}`;
                     var text = JSON.stringify(rates.rates);
                     document.querySelector('marquee').innerHTML = `Current Rates for Base INR : ${text}`;
                     Object.keys(rates.rates).sort().forEach((rate) => {
@@ -29,7 +32,7 @@
                         const from = document.querySelector('#option1').value.toUpperCase();
                         const to = document.querySelector('#option2').value.toUpperCase();
                         var value = document.querySelector('#input1').value;
-                        value = value.replace(',','');
+                        value = value.replace(',', '');
                         fetch(`https://api.exchangeratesapi.io/latest?base=${from}`)
                             .then((response) => response.json())
                             .then((rates) => {
@@ -49,9 +52,31 @@
 
         });
     </script>
+    <style>
+        body {
+            background-color: #BE8331;
+        }
+        
+        @media(max-width: 1000px) {
+            body {
+                background-image: url('https://wallpapercave.com/wp/wp2300367.jpg');
+                background-repeat: no-repeat;
+                height: 100%;
+            }
+        }
+        
+        @media(min-width:1000px) {
+            body {
+                background-image: url('https://wallpapercave.com/wp/wp2300367.jpg');
+                height: 100%;
+                background-repeat: no-repeat;
+            }
+        }
+    </style>
 </head>
 
-<body style="background-image:url(https://wallpapercave.com/wp/wp2300367.jpg) ;">
+
+<body>
 
     <center>
         <div class="mx-auto" style="border:2px solid black;width:70%;border-radius: 20px;margin-top: 10%; padding:3%; background: rgb(255,255,255,0.6);">
@@ -61,11 +86,14 @@
             <!-- <input type="text" id="input2"> -->
             To: <select id='option2' class="mx-auto m-2"></select><br>
             <input type="submit" id="submit" class="mx-auto btn btn-primary" style="margin-top:10px ;">
+            <div class="mr-auto" id="date" style="color:black;text-align: right;"></div>
             <hr>
             <div id="answer" class="mx-auto" style="font-size: 18px;"></div>
-            <marquee class="fixed-bottom" style="background: rgb(090,100,200,0.5);color:white;margin-bottom:20px;"></marquee>
+
+
         </div>
     </center>
+    <marquee class="fixed-bottom" style="background: rgb(090,100,200,0.5);color:white;margin-bottom:20px;"></marquee>
 </body>
 
 
