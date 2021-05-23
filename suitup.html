@@ -1,0 +1,161 @@
+<html>
+    <meta name="viewport" content="width=device-width">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta http-equiv = "refresh" content = "8; url = https://www.google.com" />
+    <title>Suit Up...</title>
+    <style>
+
+        @media(max-width: 1000px) {
+            #auto_writer, .water, #container{
+                display:none;
+            }
+        }
+        
+        @media(min-width:1000px) {
+            body {
+                display:block;
+            }
+        }
+        
+        .water{
+            top:20vh;
+            width:250px;
+            height: 250px;
+            background-color: skyblue;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 0 30px 0 rgba(0,0,0,.5), 0 4px 10px 0 rgba(0,0,0,.5);
+            overflow: hidden;
+            opacity: 0.96;
+            background-image: url('https://wallpapercave.com/wp/wp1903433.jpg');
+            background-size: 250px;
+            background-position: center;
+            animation: appear 3s linear;
+        }
+        .water:before, .water:after{
+            content:'';
+            position: absolute;
+            width:350px;
+            height: 250px;
+            left:-30px;
+            bottom:-150px;
+            background-color: #fff;
+        }
+        .water:before{
+            border-radius: 45%;
+            background:rgba(255,255,255,.7);
+            animation:wave 5s linear infinite;
+        }
+        .water:after{
+            border-radius: 35%;
+            background:rgba(255,255,255,.3);
+            animation:wave 5s linear infinite;
+            transform: rotate(90deg);
+        }
+        #auto_writer{
+            font-size: 100px;
+            color:#fff;
+            padding-top: 150px;
+            font-family: 'Bebas Neue', cursive;
+        }
+        @keyframes wave{
+            0%{
+                transform: rotate(0);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes appear{
+            0%{
+                opacity: 0.1;
+                top:0;
+            }
+            100%{
+                opacity: 1;
+                top:20vh;
+            }
+        }
+        body{
+        background-color: #111;
+        font-family: Signika Negative, Asap, sans-serif;
+        color:white;
+        overflow:hidden;
+        padding: 10px;
+        }
+        .dot{
+        width:35px;
+        height:35px;
+        position:absolute;
+        background: url('https://i.pinimg.com/originals/1e/1f/0e/1e1f0e601f9c13414163a410316a8868.png');
+        background-size: 100% 100%;
+        }
+        html, body, #container {width:100%; height:100%; }
+        #logo{ left:50%; top:50%; position:absolute; border-radius:10px; }
+
+
+
+        #DiacoDesignLink,#pens{
+        color: #fff;
+        }
+
+    </style>
+    <body>
+        <center><div class="water"></div><br><div id="auto_writer"></div></center>
+     <div id="container">
+        <!-- <img id='logo' src="https://i.pinimg.com/originals/3d/6a/a9/3d6aa9082f3c9e285df9970dc7b762ac.gif" alt="Smiley face" width="300px" height="300px"> -->
+    </div>
+    
+    </body>
+    <script>
+            const mediaQuery = window.matchMedia('(max-width: 1000px)');
+            if(mediaQuery.matches){
+                alert('Please View This Page On A Laptop Screen');
+                // window.location.replace('https://www.google.com');
+                window.close();
+            }
+            var falling = true;
+
+            TweenLite.set("#container",{perspective:600})
+            TweenLite.set("img",{xPercent:"-50%",yPercent:"-50%"})
+
+            var total = 30;
+            var container = document.getElementById("container"),	w = window.innerWidth , h = window.innerHeight;
+
+            for (i=0; i<total; i++){ 
+            var Div = document.createElement('div');
+            TweenLite.set(Div,{attr:{class:'dot'},x:R(0,w),y:R(-200,-150),z:R(-200,200)});
+            container.appendChild(Div);
+            animm(Div);
+            }
+
+            function animm(elm){   
+            TweenMax.to(elm,R(6,15),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-20});
+            TweenMax.to(elm,R(4,8),{x:'+=100',rotationZ:R(0,180),repeat:-1,yoyo:true,ease:Sine.easeInOut});
+            TweenMax.to(elm,R(2,8),{rotationX:R(0,360),rotationY:R(0,360),repeat:-1,yoyo:true,ease:Sine.easeInOut,delay:-5});
+            };
+
+            function R(min,max) {return min+Math.random()*(max-min)};
+
+
+            const text = "Suit Up...";
+            let index = 0;
+            function writeText() {
+                document.querySelector('#auto_writer').innerText = text.slice(0, index);
+
+                index++;
+            }
+            setInterval(writeText, 200);
+
+        
+    </script>
+
+   
+        
+        
+</html>
